@@ -1,17 +1,23 @@
 package SpringBootApp.bean;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@Table(name="inventory_item")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class InventoryItem 
 {
 	@Id
+	@Column(name="id")
 	private Long id;
+	@Column(name="product_code")
 	private String productCode;
+	@Column(name="available_quantity")
 	private Integer availableQuantity;
 	
 	public InventoryItem() {}

@@ -16,6 +16,7 @@ import SpringBootApp.bean.OrderList;
 import SpringBootApp.bean.Product;
 import SpringBootApp.persistence.OrderDao;
 import SpringBootApp.persistence.OrderItemDao;
+import SpringBootApp.persistence.InventoryDao;
 
 @Service
 public class OrderServiceImpl implements OrderService
@@ -32,6 +33,9 @@ public class OrderServiceImpl implements OrderService
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private InventoryDao inventoryDao;
 	
 	public Product getProductByProductId(long productId)
 	{
@@ -52,7 +56,9 @@ public class OrderServiceImpl implements OrderService
 			
 			if(item.getQuantity()<=inItem.getAvailableQuantity())
 			{
-				item.setProductPrice(product.getPrice());
+				
+				int rem=inItem.getAvailableQuantity()-item.getQuantity();
+				inventoryDao.updateAvailableQuantity(inItem.getProductCode(), rem);
 				acceptedOrderList.add(item);
 				orderItemDao.save(item);
 			}
