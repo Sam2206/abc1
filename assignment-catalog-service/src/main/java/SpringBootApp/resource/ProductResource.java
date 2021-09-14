@@ -24,7 +24,11 @@ public class ProductResource
 	{
 		return new ProductList(productService.getAllProducts());
 	}
-	
+	@GetMapping(value="/products/list", produces="application/json")
+	public List<Product> allProducts()
+	{
+		return productService.getAllProducts();
+	}
 	@GetMapping(value="/products/code/{productCode}", produces="application/json")
 	public Optional<Product> getProductByCode(@PathVariable("productCode") String productCode)
 	{
